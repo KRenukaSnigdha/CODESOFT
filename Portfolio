@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="stylesheet" href="assets/css/styles.css">
+
+        <title>Responsive landing page</title>
+        <style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+:root {
+  --header-height: 3rem;
+
+  --first-color: #27d1cb;
+  --first-color-alt: #19898998;
+  --first-color-send: #7ac4bd;
+  --title-color: #161212;
+  --text-color: #5B5757;
+  --text-color-light: #8F8A8A;
+  --body-color: #FEFBFB;
+  --container-color: #FFF;
+
+  --body-font: 'Poppins', sans-serif;
+  --biggest-font-size: 2rem;
+  --h2-font-size: 1.25rem;
+  --h3-font-size: 1.125rem;
+  --normal-font-size: .938rem;
+  --small-font-size: .813rem;
+
+  --font-semi-bold: 600;
+  --font-bold: 700;
+
+  --mb-1: .5rem;
+  --mb-2: 1rem;
+  --mb-3: 1.5rem;
+  --mb-4: 2rem;
+  --mb-5: 2.5rem;
+  --mb-6: 3rem;
+
+  --z-tooltip: 10;
+  --z-fixed: 100;
+}
+
+@media screen and (min-width: 1200px){
+  :root{
+    --biggest-font-size: 3rem;
+    --h2-font-size: 1.75rem;
+    --h3-font-size: 1.25rem;
+    --normal-font-size: 1rem;
+    --small-font-size: .875rem;
+  }
+}
+
+*,::before,::after{
+  box-sizing: border-box;
+}
+
+html{
+  scroll-behavior: smooth;
+}
+
+body.dark-theme{
+  --first-color-send: #161212;
+  --title-color: #F3F1F1;
+  --text-color: #D1C7C8;
+  --body-color: #251D1E;
+  --container-color: #302728;
+}
+
+.change-theme{
+  position: absolute;
+  right: 1.5rem;
+  top: 2.2rem;
+  display: flex;
+  color: var(--title-color);
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+body{
+  margin: var(--header-height) 0 0 0;
+  font-family: var(--body-font);
+  font-size: var(--normal-font-size);
+  background-color: var(--body-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+h1,h2,h3,ul,p{
+  margin: 0;
+}
+
+h1,h2,h3{
+  font-weight: var(--font-semi-bold);
+  color: var(--title-color);
+}
+
+ul{
+  padding: 0;
+  list-style: none;
+}
+
+a{
+  text-decoration: none;
+}
+
+img{
+  max-width: 80%;
+  height: auto;
+}
+
+
+.section{
+  padding: 4rem 0 2rem;
+}
+
+.section-title, .section-title-center{
+  font-size: var(--h2-font-size);
+  color: var(--title-color);
+  text-align: center;
+  margin-bottom: var(--mb-3);
+}
+
+.l-main{
+  overflow: hidden;
+}
+
+.bd-container{
+  max-width: 1300px;
+  width: calc(100% - 3rem);
+  margin-left: var(--mb-3);
+  margin-right: var(--mb-3);
+}
+
+.bd-grid{
+  display: grid;
+  gap: 1.5rem;
+}
+
+.l-header{
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--z-fixed);
+  background-color: var(--body-color);
+}
+
+.nav{
+  height: var(--header-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media screen and (max-width: 1000px){
+  .nav__menu{
+    position: fixed;
+    top: -100%;
+    left: 0;
+    right: 0;
+    width: 90%;
+    margin: 0 auto;
+    padding: 2.5rem 0 0;
+    text-align: center;
+    background-color: var(--body-color);
+    transition: .4s;
+    box-shadow: 0 0 4px rgba(0,0,0,.1);
+    border-radius: 2rem;
+    z-index: var(--z-fixed);
+  }
+}
+
+.nav__item{
+  margin-bottom: var(--mb-3);
+}
+
+.nav__link, .nav__logo, .nav__toggle{
+  color: var(--title-color);
+  font-weight: var(--font-semi-bold);
+}
+
+.nav__logo:hover{
+  color: var(--first-color);
+}
+
+.nav__link{
+  transition: .3s;
+}
+
+.nav__link:hover{
+  color: var(--first-color);
+}
+
+.nav__toggle{
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.show-menu{
+  top: calc(var(--header-height) + 1rem);
+}
+
+.active-link{
+  position: relative;
+}
+
+.active-link::before{
+  content: '';
+  position: absolute;
+  bottom: -.75rem;
+  left: 45%;
+  width: 5px;
+  height: 5px;
+  background-color: var(--title-color);
+  border-radius: 50%;
+}
+
+.scroll-header{
+  box-shadow: 0 1px 4px rgba(0,0,0,.1);
+}
+
+.scrolltop{
+  position: fixed;
+  right: 1rem;
+  bottom: -20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: .3rem;
+  background: rgba(218,37,53,.5);
+  border-radius: .4rem;
+  z-index: var(--z-tooltip);
+  transition: .4s;
+  visibility: hidden;
+}
+
+.scrolltop:hover{
+  background-color: var(--first-color);
+}
+
+.scrolltop__icon{
+  font-size: 1.5rem;
+  color: var(--body-color);
+}
+
+.show-scroll{
+  visibility: visible;
+  bottom: 1.5rem;
+}
+
+.home__container{
+  row-gap: .5rem;
+}
+
+.home__img{
+  width: 320px;
+  justify-self: center;
+}
+
+.home__title{
+  font-size: var(--biggest-font-size);
+  font-weight: var(--font-bold);
+  margin-bottom: var(--mb-2);
+}
+
+.home__description{
+  margin-bottom: var(--mb-3);
+}
+
+.button{
+  display: inline-block;
+  background-color: var(--first-color);
+  color: #fff;
+  padding: 1rem 1.5rem;
+  border-radius: .5rem;
+  font-weight: var(--font-semi-bold);
+  transition: .3s;
+}
+
+.button:hover{
+  background-color: var(--first-color-alt);
+}
+
+.button-link{
+  background: none;
+  padding: 0;
+  color: var(--first-color);
+}
+
+.button-link:hover{
+  background-color: transparent;
+  color: var(--first-color-alt);
+}
+
+.share__data{
+  text-align: center;
+}
+
+.share__description{
+  margin-bottom: var(--mb-2);
+}
+
+.share__img{
+  width: 280px;
+  justify-self: center;
+}
+
+.decoration__container{
+  grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+}
+
+.decoration__data{
+  text-align: center;
+  padding: 1rem 1rem 2rem;
+  background-color: var(--container-color);
+  box-shadow: 0 2px 6px rgba(65,11,16,.15);
+  border-radius: 1rem;
+}
+
+.decoration__data:hover{
+  box-shadow: 0 3px 12px rgba(65,11,16,.15);
+}
+
+.decoration__img{
+  width: 400px;
+  height: 400px;
+}
+
+.decoration__title{
+  font-size: var(--h3-font-size);
+  margin-bottom: var(--mb-1);
+}
+
+.send{
+  background-color: var(--first-color-send);
+}
+
+.send__title, .send__description{
+  color: #fff;
+}
+
+.send__description{
+  text-align: center;
+  margin-bottom: var(--mb-4);
+}
+
+.send__direction{
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: .5rem;
+  border-radius: .5rem;
+}
+
+.send__input{
+  width: 90%;
+  outline: none;
+  border: none;
+  font-size: var(--normal-font-size);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.send__input::placeholder{
+  font-family: var(--body-font);
+}
+
+.send__img{
+  width: 280px;
+  justify-self: center;
+}
+
+label {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color:rgb(18, 86, 108);
+      color: #fff;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    table {
+      width: 80%;
+      border-collapse: collapse;
+      border: 0px solid;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color:rgb(76, 116, 136);
+      color: white;
+    }
+
+.footer__container{
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.footer__logo{
+  color: var(--title-color);
+}
+
+.footer__title{
+  margin-bottom: var(--mb-2);
+}
+
+.footer__logo, .footer__title{
+  font-size: var(--h3-font-size);
+}
+
+.footer__link{
+  display: inline-block;
+  margin-bottom: .75rem;
+  color: var(--text-color);
+}
+
+.footer__link:hover{
+  color: var(--first-color);
+}
+
+.footer__social{
+  font-size: 1.5rem;
+  color: var(--title-color);
+  margin-right: var(--mb-3);
+}
+
+.footer__social:hover{
+  color: var(--first-color);
+}
+
+.footer__copy{
+  text-align: center;
+  font-size: var(--small-font-size);
+  color: var(--text-color-light);
+  margin-top: 4rem;
+}
+
+@media screen and (max-width: 600px){
+  .home__img,
+  .share__img,
+  .send__img{
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 900px){
+  .home__container,
+  .share__container,
+  .send__container{
+    grid-template-columns: repeat(2,1fr);
+    align-items: center;
+  }
+
+  .home__container{
+    padding: 5rem 0 0;
+  }
+
+  .home__img{
+    order: 1;
+  }
+
+  .section-title-center,
+  .share__data,
+  .send__description{
+    text-align: initial;
+  }
+
+  .home__img,
+  .share__img,
+  .send__img{
+    width: 100%;
+  }
+  
+  .share__img{
+    order: -1;
+  }
+}
+@media screen and (min-width: 1400px){
+  body{
+    margin: 0;
+  }
+
+  .section{
+    padding-top: 7rem;
+  }
+
+  .nav{
+    height: calc(var(--header-height) + 1.5rem);
+  }
+
+  .nav__list{
+    display: flex;
+    align-items: center;
+  }
+
+  .nav__item{
+    margin-left: var(--mb-5);
+    margin-bottom: 0;
+  }
+
+  .nav__toggle{
+    display: none;
+  }
+
+  .change-theme{
+    position: initial;
+    margin-left: var(--mb-4);
+  }
+
+  .home__container{
+    padding: 7rem 2rem 0;
+  }
+
+  .share__container{
+    padding: 0 2rem;
+  }
+
+  .accessory__container{
+    grid-template-columns: repeat(3,224px);
+    justify-content: center;
+  }
+
+  .accessory__content{
+    padding: .5rem 1.5rem 1.5rem;
+  }
+
+  .accessory__img{
+    width: 120px;
+    margin-bottom: var(--mb-1);
+  }
+
+  .accessory__title, .accessory__category{
+    text-align: initial;
+  }
+
+  .accessory__button{
+    padding: .75rem;
+  }
+
+  .send{
+    background: none;
+  }
+
+  .send__container{
+    background-color: var(--first-color-send);
+    padding: 2rem;
+    border-radius: 1.5rem;
+  }
+}
+
+@media screen and (min-width: 1000px){
+  .bd-container{
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .home__img,
+  .share__img,
+  .send__img{
+    width: 469px;
+  }
+
+  .home__container,
+  .share__container,
+  .send__container{
+    column-gap: 7rem;
+  }
+}
+        </style>
+    </head>
+    <body>
+
+        <a href="#" class="scrolltop" id="scroll-top">
+            <i class='bx bx-up-arrow-alt scrolltop__icon'></i>
+        </a>
+
+        <header class="l-header" id="header">
+            <nav class="nav bd-container">
+                <a href="#" class="nav__logo">Portfolio</a>
+
+                <div class="nav__menu" id="nav-menu">
+                    <ul class="nav__list">
+                        <li class="nav__item"><a href="#home" class="nav__link active-link">Home</a></li>
+                        <li class="nav__item"><a href="#share" class="nav__link">Talents</a></li>
+                        <li class="nav__item"><a href="#decoration" class="nav__link">Projects</a></li>
+                        <li class="nav__item"><a href="#profiles" class="nav__link">Profiles</a></li>
+                        <li class="nav__item"><a href="#decoration" class="nav__link">Certificates</a></li>
+                        <li class="nav__item"><a href="#send" class="nav__link">Contact</a></li>
+
+                        <li><i class='bx bx-toggle-left change-theme' id="theme-button"></i></li>
+                    </ul>
+                </div>
+
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class='bx bx-grid-alt'></i>
+                </div>
+            </nav>
+        </header>
+
+        <main class="l-main">
+            <section class="home" id="home">
+                <div class="home__container bd-container bd-grid">
+                    <div class="home__img">
+                        <img src="https://www.neuronimbus.com/blog/wp-content/uploads/2021/06/WEB-AI-1.jpg" alt="">
+                    </div>
+
+                    <div class="home__data">
+                        <h1 class="home__title">Hey,<br> I'm <span>Snigdha,<br></span> Web Developer.</h1>
+                        <p class="home__description">Passionate Web Developer and Designer, Transforming Ideas into Stunning Digital Experiences with Innovation and Precision. Let's build the future together, one pixel at a time.</p>
+                        <a href="#" class="button">Contact</a>
+                        <a href="#" class="button">Resume</a>
+                    </div>   
+                </div>
+            </section>
+
+            <section class="share section bd-container" id="share">
+                <div class="share__container bd-grid">
+                    <div class="share__data">
+                        <h1 class="section-title-center">My Expertise </h1>
+                        <p class="share__description"><b><i>FRONT-END DEVELOPMENT</i></b> - HTML5,CSS3,JavaScript(ES6+),Responsive Web Design,Front-end Frameworks </p>
+                        <p class="share__description"><b><i>Back-End Development</i></b> - Node.js,Express.js,Server-side languages (e.g., Python,PHP),Database Management (SQL, NoSQL)</p>
+                        <p class="share__description"><b><i>AI and ML Integration</i></b> - TensorFlow,PyTorch,Scikit-Learn,Natural Language Processing (NLP),Computer Vision</p>
+                        <p class="share__description"><b><i>Full-Stack Development</i></b> - MERN Stack (MongoDB, Express.js, React, Node.js),MEAN Stack (MongoDB, Express.js, Angular, Node.js) </p>
+                        <p class="share__description"><b><i>UI/UX Design</i></b> - Wireframing and Prototyping,User Interface Design,User Experience Design,Adobe Creative Suite (Photoshop, Illustrator, XD)</p>
+                        <p class="share__description"><b>Responsive Design<i></i></b> - Media Queries,Bootstrap,Flexbox,CSS Grid</p>
+                        <p class="share__description"><b>API Integration<i></i></b> - RESTful APIs,GraphQL</p> 
+                    </div>
+
+                    <div class="share__img">
+                        <img src="https://th.bing.com/th/id/OIP.1384uQdSIH5M21koboJHmQHaHa?rs=1&pid=ImgDetMain" alt="">
+                    </div>
+                </div>
+            </section>
+
+            <section class="decoration section bd-container" id="decoration">
+                <h1 class="section-title">PROJECTS AND PROFILES</h1>
+                <div class="decoration__container bd-grid">
+                    <div class="decoration__data">
+                      <a href="https://ibb.co/4W5RmKD"><img src="https://i.ibb.co/nr5Mg6V/Screenshot-2024-03-03-103827.png" alt="Screenshot-2024-03-03-103827" border="0"></a>
+                        <h3 class="decoration__title">IOT - WORKSHOP (by IIC)</h3>
+                        <p>Empowering Tomorrow's Innovators: Dive into the World of IoT with Sensors in a Week-Long Workshop by the Institutions Innovation Council</p>`
+                        <a href="https://mic.gov.in/" class="button button-link">Visit</a>
+                    </div>
+                    <div class="decoration__data">
+                        <a href="https://ibb.co/YNTZcFY"><img src="https://i.ibb.co/Mg56cxW/Screenshot-2024-03-13-101312.png" alt="Screenshot-2024-03-13-101312" border="0" style="height: 500px;"></a>
+                        <h3 class="decoration__title">English Strokes (British Council)</h3>
+                        <p>Mastering the Art of English Communication: Certified by the British Council's English Strokes Program  all the three advanced levels– Elevating Language Proficiency to New Heights</p>
+                        <img src="">
+                        <a href="https://www.englishstrokes.com/my-account" class="button button-link">Visit</a>
+                    </div>
+                    <div class="decoration__data">
+                      <a href="https://ibb.co/wpzn7jM"><img src="https://i.ibb.co/QYKWktr/Screenshot-2024-03-13-120503.png" alt="Screenshot-2024-03-13-120503" border="0"></a>
+                        <h3 class="decoration__title"> Introduction to Cybersecurity (CISCO)</h3>
+                        <p>Empowering Tomorrow's Guardians: Certified in Cybersecurity by Cisco – A Shield for the Digital Realm .</p>
+                        <p>Forge Your Cybersecurity Future, Elevate Your Skills, Protecting Tomorrow's Digital Frontiers. Empower Your Career Path with Elite Cybersecurity Training. Take the Leap into Secure Futures with Cisco-Certified Internship Excellence.</p>
+                        <a href="https://www.netacad.com/courses/cybersecurity/introduction-cybersecurity" class="button button-link">Visit</a>
+                    </div>
+                    <div class="decoration__data" id="profiles">
+                        <img src="https://cdni.iconscout.com/illustration/premium/thumb/id-card-7175608-6831351.png?f=webp" alt="" class="decoration__img">
+                        <h3 class="decoration__title">LinkedIn Profile</h3>
+                        <a href="https://www.linkedin.com/in/kantamani-renuka-snigdha-51a457276/" class="button button-link">Click to Visit</a>
+                        <h3 class="decoration__title">Resume</h3>
+                        <a href="https://laser-complex-raven.glitch.me/" class="button button-link">Click to Visit</a>
+                        <a href="#" class="button button-link"></a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="send section" id="send">
+                <div class="send__container bd-container bd-grid">
+                  <div class="container">
+                    <div class="container"><h2><i>Leave Me a Message (or) Contact Me</i></h2></div>
+                      <br>
+                          <form id="registrationForm">
+                           <tr>
+                              <td> <label for="firstName">Name:</label></td>
+                              <td> <input type="text" id="name" name="name" required></td>
+                          </tr>
+                          <tr>
+                              <td><label for="companyName">Company Name:</label></td> 
+                              <td><input type="text" id="companyName" name="companyName" required> </td> 
+                          </tr>
+                          <tr>
+                             <td><label for="email">Email:</label></td>
+                             <td><input type="email" id="email" name="email" required></td>
+                          </tr>
+                         <tr>
+                              <td><label for="message">Message:</label></td>
+                              <td> <textarea id="message" name="message" rows="4" required></textarea></td>
+                         </tr><br><br>
+                         <tr>
+                             <td><button type="button" onclick="submitForm()">Submit</button></td>
+                          </tr>
+                                               
+                              </form>
+                          <div id="successMessage"></div>
+                        </div>
+
+                    <div class="send__img">
+                        <img src="https://cdn.dribbble.com/users/1602563/screenshots/8869646/media/ddc33ce2c8e2570c410123f375e2c35c.gif" alt="">
+                    </div>
+                </div>
+            </section>
+        </main>
+      
+        <footer class="footer section">
+            <div class="footer__container bd-container bd-grid">
+                <div class="footer__content">
+                    <h3 class="footer__title"><img src="https://th.bing.com/th/id/OIP.PqA0Zrgw828bwQvTXMPS3QHaE8?rs=1&pid=ImgDetMain"></h3>
+                    <p class="footer__description">Open for Collabs.</p>
+                    <p class="footer__description">Phone : 9494334993</p>
+                </div>
+
+                <div class="footer__content">
+                    <h3 class="footer__title">Our Services</h3>
+                    <ul>
+                        <li><a href="#" class="footer__link">Responsive Web Design</a></li>
+                        <li><a href="#" class="footer__link">Custom Web Development</a></li>
+                        <li><a href="#" class="footer__link">Performance Optimization</a></li>
+                        <li><a href="#" class="footer__link">Ongoing Support & Maintenance</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer__content">
+                    <h3 class="footer__title">Reach Me Out</h3>
+                    <ul>
+                        <li><a href="#" class="footer__link">Blog</a></li>
+                        <li><a href="#" class="footer__link">About me</a></li>
+                        <li><a href="#" class="footer__link">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer__content">
+                    <h3 class="footer__title">Social</h3>
+                    <a href="#" class="footer__social"><i class='bx bxl-facebook-circle '></i></a>
+                    <a href="#" class="footer__social"><i class='bx bxl-twitter'></i></a>
+                    <a href="#" class="footer__social"><i class='bx bxl-instagram-alt'></i></a>
+                    <h3 class="footer__title">Email</h3>
+                    <p>renukasnigdha@yahoo.com</p>
+                </div>
+
+                
+                <div class="footer__content">
+                  <h3 class="footer__title">Address</h3>
+                  <p>8-42-3,kotthaveedhi,velivennu,eastgodavari, AP</p>
+              </div>
+            </div>
+
+            <p class="footer__copy">&#169; 2024. All right reserved</p>
+        </footer>
+
+        <script src="https://unpkg.com/scrollreveal"></script>
+
+        <script>
+const showMenu = (toggleId, navId) =>{
+    const toggle = document.getElementById(toggleId),
+    nav = document.getElementById(navId)
+
+    if(toggle && nav){
+        toggle.addEventListener('click', ()=>{
+
+            nav.classList.toggle('show-menu')
+        })
+    }
+}
+showMenu('nav-toggle','nav-menu')
+
+const navLink = document.querySelectorAll('.nav__link')
+
+function linkAction(){
+    const navMenu = document.getElementById('nav-menu')
+    navMenu.classList.remove('show-menu')
+}
+navLink.forEach(n => n.addEventListener('click', linkAction))
+
+const sections = document.querySelectorAll('section[id]')
+
+function scrollActive(){
+    const scrollY = window.pageYOffset
+
+    sections.forEach(current =>{
+        const sectionHeight = current.offsetHeight
+        const sectionTop = current.offsetTop - 50;
+        sectionId = current.getAttribute('id')
+
+        if(scrollY > sectionTop && scrollY <= sectionTop + sectionHeight){
+            document.querySelector('.nav__menu a[href*=' + sectionId + ']').classList.add('active-link')
+        }else{
+            document.querySelector('.nav__menu a[href*=' + sectionId + ']').classList.remove('active-link')
+        }
+    })
+}
+window.addEventListener('scroll', scrollActive)
+
+function scrollHeader(){
+    const nav = document.getElementById('header')
+    // When the scroll is greater than 200 viewport height, add the scroll-header class to the header tag
+    if(this.scrollY >= 200) nav.classList.add('scroll-header'); else nav.classList.remove('scroll-header')
+}
+window.addEventListener('scroll', scrollHeader)
+
+function scrollTop(){
+    const scrollTop = document.getElementById('scroll-top');
+    // When the scroll is higher than 560 viewport height, add the show-scroll class to the a tag with the scroll-top class
+    if(this.scrollY >= 560) scrollTop.classList.add('show-scroll'); else scrollTop.classList.remove('show-scroll')
+}
+window.addEventListener('scroll', scrollTop)
+
+const themeButton = document.getElementById('theme-button')
+const darkTheme = 'dark-theme'
+const iconTheme = 'bx-toggle-right'
+
+const selectedTheme = localStorage.getItem('selected-theme')
+const selectedIcon = localStorage.getItem('selected-icon')
+
+const getCurrentTheme = () => document.body.classList.contains(darkTheme) ? 'dark' : 'light'
+const getCurrentIcon = () => themeButton.classList.contains(iconTheme) ? 'bx-toggle-left' : 'bx-toggle-right'
+
+if (selectedTheme) {
+  document.body.classList[selectedTheme === 'dark' ? 'add' : 'remove'](darkTheme)
+  themeButton.classList[selectedIcon === 'bx-toggle-left' ? 'add' : 'remove'](iconTheme)
+}
+
+themeButton.addEventListener('click', () => {
+    // Add or remove the dark / icon theme
+    document.body.classList.toggle(darkTheme)
+    themeButton.classList.toggle(iconTheme)
+    // We save the theme and the current icon that the user chose
+    localStorage.setItem('selected-theme', getCurrentTheme())
+    localStorage.setItem('selected-icon', getCurrentIcon())
+})
+
+const sr = ScrollReveal({
+    distance: '30px',
+    duration: 1800,
+    reset: true,
+});
+
+sr.reveal(`.home__data, .home__img, 
+           .decoration__data,
+           .accessory__content,
+           .footer__content`, {
+    origin: 'top',
+    interval: 200,
+})
+
+sr.reveal(`.share__img, .send__content`, {
+    origin: 'left'
+})
+
+sr.reveal(`.share__data, .send__img`, {
+    origin: 'right'
+})
+
+function submitForm() {
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const message = document.getElementById('message').value;
+  const successMessage = document.getElementById('successMessage');
+  successMessage.innerHTML = `Thank you, ${name}! Your message has been submitted.`;
+  document.getElementById('contactForm').reset();
+}
+        </script>
+    </body>
+</html>
